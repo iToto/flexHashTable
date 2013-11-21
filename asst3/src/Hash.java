@@ -15,12 +15,12 @@ import java.util.*;
 public class Hash {
 
     public static int lastValue = 0, firstValue = 0; //input array positions
-    
+
     private static InString[] values = new InString[128];
     private static int nInStrings = 0;
 
 
-    
+
     public static void main(String[] args) {
         loadTextFile("hash_test_file1.txt");
         Table ht = new Table();
@@ -31,7 +31,7 @@ public class Hash {
         timeGetOperation(ht);
         countCollisions(ht);
     }
-    
+
 
 
     //puts the text file into an array in memory so I/O itself is not timed over and over
@@ -42,23 +42,24 @@ public class Hash {
         ++nInStrings;
     }
 
-    
+
 
     public static void countCollisions (Table ht) {
-    	int totalCollisions = 0;
+        int totalCollisions = 0;
         int collisionNodes  = 0;
         int maxCollisions   = 0;
         for (int i=0; i < ht.table.length; ++i) {
             if (ht.table[i] !=null) {
+                int currentCollisions = 0;
                 if (ht.table[i].next!=null) {
                     ++collisionNodes;
                     InString currentNode  = ht.table[i];
-                    int currentCollisions = 0;
                     while (currentNode.next != null) {
                         ++totalCollisions;
                         ++currentCollisions;
                         currentNode = currentNode.next;
                     }
+                }
                 if (currentCollisions > maxCollisions) {
                     maxCollisions = currentCollisions;
                 }
@@ -82,7 +83,7 @@ public class Hash {
         System.out.println(
             "The highest number of collisions was " + maxCollisions);
     }
-    
+
 
 
     /**performs get operation on all available strings and times it */
@@ -99,7 +100,7 @@ public class Hash {
             " milliseconds.");
     }
 
-    
+
 
     /**performs put operation on all available strings and times it */
     public static void timePutOperation (Table ht) {
@@ -110,7 +111,7 @@ public class Hash {
         System.out.println( "Put operation on " + nInStrings + " Strings took "
                 +(System.nanoTime() - startTime) /1000000 + " milliseconds.");
     }
-    
+
 
 
     public static void loadTextFile(String in) {
