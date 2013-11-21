@@ -40,41 +40,55 @@ public class Hash {
 	}
 
 		public static void countCollisions (Table ht) {
-		int totalCollisions = 0;
-		int collisionNodes = 0;
-		int maxCollisions = 0;
+        int totalCollisions = 0;
+        int collisionNodes  = 0;
+        int maxCollisions   = 0;
 		for (int i=0; i < ht.table.length; ++i) {
 			if (ht.table[i] !=null) {
 				if (ht.table[i].next!=null) {
 					++collisionNodes;
-					InString currentNode = ht.table[i];
-					int currentCollisions = 0;
+                    InString currentNode  = ht.table[i];
+                    int currentCollisions = 0;
 					while (currentNode.next != null) {
 						++totalCollisions;
 						++currentCollisions;
 						currentNode = currentNode.next;
 					}
-				if (currentCollisions > maxCollisions)
+				if (currentCollisions > maxCollisions) {
 					maxCollisions = currentCollisions;
 				}
 			}
 		}
-		if (collisionNodes == 0)
+		if (collisionNodes == 0) {
 			System.out.println("There were no collisions. ");
-		else
-			System.out.println("There were "
-				 + totalCollisions + " total collisions" + " in " + collisionNodes + " nodes. "
-				 + "\nThere were " +(double)totalCollisions/collisionNodes + " collisions on average per collision cell." );
-			System.out.println("The highest number of collisions was " + maxCollisions);
+        }
+		else {
+			System.out.println(
+                "There were " +
+                totalCollisions +
+                " total collisions" +
+                " in " +
+                collisionNodes +
+                " nodes. " +
+                "\nThere were " +
+                (double)totalCollisions/collisionNodes +
+                " collisions on average per collision cell." );
+        }
+		System.out.println(
+            "The highest number of collisions was " + maxCollisions);
 	}
 	/**performs get operation on all available strings and times it */
 	public static void timeGetOperation(Table ht) {
-				long startTime = System.nanoTime();
+        long startTime = System.nanoTime();
 		for (int i = firstValue; i < nInStrings; ++i) {
 			ht.get (values[i]);
 		}
-		System.out.println("Get operation on " + (nInStrings - firstValue ) + " strings took "
-				+ (System.nanoTime() - startTime) /1000000 + " milliseconds.");
+		System.out.println(
+            "Get operation on " +
+            (nInStrings - firstValue ) +
+            " strings took " +
+            (System.nanoTime() - startTime) /1000000 +
+            " milliseconds.");
 	}
 
 	/**performs put operation on all available strings and times it */
