@@ -17,8 +17,9 @@ public class Table {
 				table = resizeArray(table, table.length+expansionLength);
 		}
 		if (s.hash == 0)
-			s.hash();
-		insert (s, (s.hash & 0x7fffffff) % table.length);
+			insert (s, (s.hash() & 0x7fffffff) % table.length);
+		else 
+			insert (s, (s.hash & 0x7fffffff) % table.length);
 		}
 	//puts the node where it belongs in the linked list of that index
 		public static void insert (InString s, int i) {
@@ -45,12 +46,18 @@ public class Table {
 		/**retrieves the wanted string */
 		public static InString get(InString key) { //"key" variable name is for conformity
 			int i = (key.hash & 0x7fffffff) % table.length; //it should never be null or zero because all strings are entered first
-			InString currentNode = table[i];
-			if (currentNode !=null) { //TODO: optimize the double check, especially since it returns null so often
-				while (currentNode.next != null) //test null?
+			if (table[i] == null)
+				return null;
+			if (table[i].str.equals(key.str) ) //checks first value for match
+				return table[i];
+			else {
+				InString currentNode = table[i];
+				while (currentNode.next != null)
+					if (!currentNode.str.equals(key.str)) 
+						return currentNode.next;
 					currentNode = currentNode.next;
 			}
-			return currentNode;
+			return null;
 		}
 		/**sets the load treshhold for rehashing */
 		public void setRehashThreshold (double loadFactor) {
@@ -109,11 +116,15 @@ public class Table {
 			
 		}
 		
+		/** resizes the input array
+		 * 
+		 * @param a the array that needs resizing
+		 * @param newSize	the new size. Must be greater than the initial size
+		 * @return	a bigger array with the same values in the same indexes
+		 */
 		static InString[] resizeArray(InString[] a, int newSize) {
 			InString[] newArray = new InString[newSize];
 			System.arraycopy(a, 0, newArray, 0, a.length );
 			return newArray;
 		}
-
-
 }

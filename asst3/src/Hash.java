@@ -22,10 +22,11 @@ public class Hash {
 
 	
 	public static void main(String[] args) {
-		Table ht = new Table();
 		loadTextFile("hash_test_file1.txt");
-		
+		Table ht = new Table();
 		//printHashTableStatistics();
+		
+		ht = new Table();
 		timePutOperation(ht);
 		timeGetOperation(ht);
 		countCollisions(ht);
@@ -37,13 +38,6 @@ public class Hash {
 		values[nInStrings] = new InString (s);
 		++nInStrings;
 	}
-	
-	/** resizes the input array
-	 * 
-	 * @param a the array that needs resizing
-	 * @param newSize	the new size. Must be greater than the initial size
-	 * @return	a bigger array with the same values in the same indexes
-	 */
 
 		public static void countCollisions (Table ht) { 
 		int totalCollisions = 0;
