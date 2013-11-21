@@ -15,55 +15,55 @@ import java.util.*;
 
 public class Hash {
 
-	public static int lastValue = 0, firstValue = 0; //input array positions
-	private static InString[] values = new InString[128];
+    public static int lastValue = 0, firstValue = 0; //input array positions
+    private static InString[] values = new InString[128];
 
-	private static int nInStrings = 0;
+    private static int nInStrings = 0;
 
 
-	public static void main(String[] args) {
-		loadTextFile("hash_test_file1.txt");
-		Table ht = new Table();
-		//printHashTableStatistics();
+    public static void main(String[] args) {
+        loadTextFile("hash_test_file1.txt");
+        Table ht = new Table();
+        //printHashTableStatistics();
 
         //ht = new Table(); dont need this
-		timePutOperation(ht);
-		timeGetOperation(ht);
-		countCollisions(ht);
-	}
-	//puts the text file into an array in memory so I/O itself is not timed over and over
-	private static void add (String s) {
-		if (nInStrings == values.length)
-			values = Table.resizeArray(values, values.length*2); //sloppy
-		values[nInStrings] = new InString (s);
-		++nInStrings;
-	}
+        timePutOperation(ht);
+        timeGetOperation(ht);
+        countCollisions(ht);
+    }
+    //puts the text file into an array in memory so I/O itself is not timed over and over
+    private static void add (String s) {
+        if (nInStrings == values.length)
+            values = Table.resizeArray(values, values.length*2); //sloppy
+        values[nInStrings] = new InString (s);
+        ++nInStrings;
+    }
 
-		public static void countCollisions (Table ht) {
+        public static void countCollisions (Table ht) {
         int totalCollisions = 0;
         int collisionNodes  = 0;
         int maxCollisions   = 0;
-		for (int i=0; i < ht.table.length; ++i) {
-			if (ht.table[i] !=null) {
-				if (ht.table[i].next!=null) {
-					++collisionNodes;
+        for (int i=0; i < ht.table.length; ++i) {
+            if (ht.table[i] !=null) {
+                if (ht.table[i].next!=null) {
+                    ++collisionNodes;
                     InString currentNode  = ht.table[i];
                     int currentCollisions = 0;
-					while (currentNode.next != null) {
-						++totalCollisions;
-						++currentCollisions;
-						currentNode = currentNode.next;
-					}
-				if (currentCollisions > maxCollisions) {
-					maxCollisions = currentCollisions;
-				}
-			}
-		}
-		if (collisionNodes == 0) {
-			System.out.println("There were no collisions. ");
+                    while (currentNode.next != null) {
+                        ++totalCollisions;
+                        ++currentCollisions;
+                        currentNode = currentNode.next;
+                    }
+                if (currentCollisions > maxCollisions) {
+                    maxCollisions = currentCollisions;
+                }
+            }
         }
-		else {
-			System.out.println(
+        if (collisionNodes == 0) {
+            System.out.println("There were no collisions. ");
+        }
+        else {
+            System.out.println(
                 "There were " +
                 totalCollisions +
                 " total collisions" +
@@ -74,49 +74,49 @@ public class Hash {
                 (double)totalCollisions/collisionNodes +
                 " collisions on average per collision cell." );
         }
-		System.out.println(
+        System.out.println(
             "The highest number of collisions was " + maxCollisions);
-	}
-	/**performs get operation on all available strings and times it */
-	public static void timeGetOperation(Table ht) {
+    }
+    /**performs get operation on all available strings and times it */
+    public static void timeGetOperation(Table ht) {
         long startTime = System.nanoTime();
-		for (int i = firstValue; i < nInStrings; ++i) {
-			ht.get (values[i]);
-		}
-		System.out.println(
+        for (int i = firstValue; i < nInStrings; ++i) {
+            ht.get (values[i]);
+        }
+        System.out.println(
             "Get operation on " +
             (nInStrings - firstValue ) +
             " strings took " +
             (System.nanoTime() - startTime) /1000000 +
             " milliseconds.");
-	}
+    }
 
-	/**performs put operation on all available strings and times it */
-	public static void timePutOperation (Table ht) {
-		long startTime = System.nanoTime();
-		for (int i = 0; i < nInStrings; ++i) {
-			ht.put (values[i]);
-		}
-		System.out.println( "Put operation on " + nInStrings + " Strings took "
-				+(System.nanoTime() - startTime) /1000000 + " milliseconds.");
-	}
-	public static void loadTextFile(String in) {
-		FileReader input = null;
-		try {
-			input = new FileReader (in);
-		}
-		catch (Exception e) {
-			System.out.println(e);
-		}
-		BufferedReader inputStream = new BufferedReader (input);
-		try {
-			// inserts the strings into the input array and converts into a Node
-			String s = inputStream.readLine();
-			while (s != null) {
-				add (s);
-				s = inputStream.readLine();
-			}
-		}
-		catch (Exception e) { System.out.println(e);}
-	}
+    /**performs put operation on all available strings and times it */
+    public static void timePutOperation (Table ht) {
+        long startTime = System.nanoTime();
+        for (int i = 0; i < nInStrings; ++i) {
+            ht.put (values[i]);
+        }
+        System.out.println( "Put operation on " + nInStrings + " Strings took "
+                +(System.nanoTime() - startTime) /1000000 + " milliseconds.");
+    }
+    public static void loadTextFile(String in) {
+        FileReader input = null;
+        try {
+            input = new FileReader (in);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        BufferedReader inputStream = new BufferedReader (input);
+        try {
+            // inserts the strings into the input array and converts into a Node
+            String s = inputStream.readLine();
+            while (s != null) {
+                add (s);
+                s = inputStream.readLine();
+            }
+        }
+        catch (Exception e) { System.out.println(e);}
+    }
 }
