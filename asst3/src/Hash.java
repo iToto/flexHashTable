@@ -1,8 +1,8 @@
 //TODO (alex): multithreading
-//TODO (alex): implement open addressing (double hashing) 
+//TODO (alex): implement open addressing (double hashing)
 //TODO (alex): implement a real hash funciton (to reduce number of collisions and maybe improve speed)
 
-//TODO: add interface. It will make testing and timing easier. 
+//TODO: add interface. It will make testing and timing easier.
 //TODO: optimize by setting table size to prime numbers ( easy and will reduce collisions by about 10%)
 //TODO: minor optimization: return hash on first calculation instead of retrieving it
 //TODO optimization: modify String class to reduce memory footprint
@@ -20,13 +20,13 @@ public class Hash {
 
 	private static int nInStrings = 0;
 
-	
+
 	public static void main(String[] args) {
 		loadTextFile("hash_test_file1.txt");
 		Table ht = new Table();
 		//printHashTableStatistics();
-		
-        //ht = new Table(); dont need this 
+
+        //ht = new Table(); dont need this
 		timePutOperation(ht);
 		timeGetOperation(ht);
 		countCollisions(ht);
@@ -39,20 +39,20 @@ public class Hash {
 		++nInStrings;
 	}
 
-		public static void countCollisions (Table ht) { 
+		public static void countCollisions (Table ht) {
 		int totalCollisions = 0;
 		int collisionNodes = 0;
-		int maxCollisions = 0; 
+		int maxCollisions = 0;
 		for (int i=0; i < ht.table.length; ++i) {
 			if (ht.table[i] !=null) {
-				if (ht.table[i].next!=null) { 
+				if (ht.table[i].next!=null) {
 					++collisionNodes;
 					InString currentNode = ht.table[i];
 					int currentCollisions = 0;
 					while (currentNode.next != null) {
 						++totalCollisions;
 						++currentCollisions;
-						currentNode = currentNode.next; 
+						currentNode = currentNode.next;
 					}
 				if (currentCollisions > maxCollisions)
 					maxCollisions = currentCollisions;
@@ -62,7 +62,7 @@ public class Hash {
 		if (collisionNodes == 0)
 			System.out.println("There were no collisions. ");
 		else
-			System.out.println("There were " 
+			System.out.println("There were "
 				 + totalCollisions + " total collisions" + " in " + collisionNodes + " nodes. "
 				 + "\nThere were " +(double)totalCollisions/collisionNodes + " collisions on average per collision cell." );
 			System.out.println("The highest number of collisions was " + maxCollisions);
@@ -76,7 +76,7 @@ public class Hash {
 		System.out.println("Get operation on " + (nInStrings - firstValue ) + " strings took "
 				+ (System.nanoTime() - startTime) /1000000 + " milliseconds.");
 	}
-	
+
 	/**performs put operation on all available strings and times it */
 	public static void timePutOperation (Table ht) {
 		long startTime = System.nanoTime();
@@ -98,7 +98,7 @@ public class Hash {
 		try {
 			// inserts the strings into the input array and converts into a Node
 			String s = inputStream.readLine();
-			while (s != null) {		
+			while (s != null) {
 				add (s);
 				s = inputStream.readLine();
 			}
