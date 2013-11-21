@@ -26,7 +26,7 @@ public class Hash {
 		Table ht = new Table();
 		//printHashTableStatistics();
 		
-		ht = new Table();
+        //ht = new Table(); dont need this 
 		timePutOperation(ht);
 		timeGetOperation(ht);
 		countCollisions(ht);
