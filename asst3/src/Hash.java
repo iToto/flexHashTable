@@ -39,8 +39,8 @@ public class Hash {
         ++nInStrings;
     }
 
-        public static void countCollisions (Table ht) {
-        int totalCollisions = 0;
+    public static void countCollisions (Table ht) {
+    	int totalCollisions = 0;
         int collisionNodes  = 0;
         int maxCollisions   = 0;
         for (int i=0; i < ht.table.length; ++i) {
@@ -77,6 +77,9 @@ public class Hash {
         System.out.println(
             "The highest number of collisions was " + maxCollisions);
     }
+    
+
+
     /**performs get operation on all available strings and times it */
     public static void timeGetOperation(Table ht) {
         long startTime = System.nanoTime();
@@ -91,6 +94,8 @@ public class Hash {
             " milliseconds.");
     }
 
+    
+
     /**performs put operation on all available strings and times it */
     public static void timePutOperation (Table ht) {
         long startTime = System.nanoTime();
@@ -100,6 +105,9 @@ public class Hash {
         System.out.println( "Put operation on " + nInStrings + " Strings took "
                 +(System.nanoTime() - startTime) /1000000 + " milliseconds.");
     }
+    
+
+
     public static void loadTextFile(String in) {
         FileReader input = null;
         try {
