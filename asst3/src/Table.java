@@ -9,7 +9,7 @@ public class Table {
     private static boolean expandByFactor = true;
     private static boolean separateChaining = true;
     private static char markerScheme = 'A';
-    private static InString[] table = new InString[101];
+    public static InString[] table = new InString[101];
     private static double loadFactor = 0.5;
 
 
