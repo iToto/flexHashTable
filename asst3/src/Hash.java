@@ -155,26 +155,32 @@ public class Hash {
 	}
 	
 	public static void countCollisions () { 
-		int totalCollisions=0;
-		int collisionNodes=0;
+		int totalCollisions = 0;
+		int collisionNodes = 0;
+		int maxCollisions = 0; 
 		for (int i=0; i < table.length; ++i) {
 			if (table[i] !=null) {
-				if (table[i].next!=null) {
+				if (table[i].next!=null) { 
 					++collisionNodes;
 					InString currentNode = table[i];
-					
-					while (currentNode !=null) {
+					int currentCollisions = 0;
+					while (currentNode.next != null) {
 						++totalCollisions;
+						++currentCollisions;
 						currentNode = currentNode.next; 
 					}
+				if (currentCollisions > maxCollisions)
+					maxCollisions = currentCollisions;
 				}
 			}
 		}
 		if (collisionNodes == 0)
 			System.out.println("There were no collisions. ");
 		else
-			System.out.println("There were " + (double)totalCollisions/collisionNodes + " collisions on average" 
-					+" and " +totalCollisions + " total " + " in " +collisionNodes + " nodes. ");
+			System.out.println("There were " 
+				 + totalCollisions + " total collisions" + " in " + collisionNodes + " nodes. "
+				 + "\nThere were " +(double)totalCollisions/collisionNodes + " collisions on average per collision cell." );
+			System.out.println("The highest number of collisions was " + maxCollisions);
 	}
 	/**performs get operation on all available strings and times it */
 	public static void timeGetOperation() {
