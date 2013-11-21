@@ -9,18 +9,18 @@
 //TODO: reconsider predefining the input nodes before the timing begins
 //TODO: remove temporary node creation (currentNode) to improve speed
 
-//
 import java.io.*;
 import java.util.*;
 
 public class Hash {
 
     public static int lastValue = 0, firstValue = 0; //input array positions
+    
     private static InString[] values = new InString[128];
-
     private static int nInStrings = 0;
 
 
+    
     public static void main(String[] args) {
         loadTextFile("hash_test_file1.txt");
         Table ht = new Table();
@@ -31,6 +31,9 @@ public class Hash {
         timeGetOperation(ht);
         countCollisions(ht);
     }
+    
+
+
     //puts the text file into an array in memory so I/O itself is not timed over and over
     private static void add (String s) {
         if (nInStrings == values.length)
@@ -38,6 +41,8 @@ public class Hash {
         values[nInStrings] = new InString (s);
         ++nInStrings;
     }
+
+    
 
     public static void countCollisions (Table ht) {
     	int totalCollisions = 0;
