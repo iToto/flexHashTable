@@ -3,7 +3,7 @@
 public class Table {
 
     public static int elementsInTable=0;
-
+    private static DoubleHashPrime prime = new DoubleHashPrime();
     private static double expansionCoefficient = 2.0;
     private static int expansionLength = 100;
     private static boolean expandByFactor = true;
@@ -11,6 +11,9 @@ public class Table {
     private static char markerScheme = 'A';
     public static InString[] table = new InString[101];
     private static double loadFactor = 0.5;
+    private static int hv1 = 0;
+    private static int hv2 = 0;
+
 
 
     /** Inserts a String node (InString) into the array. */
@@ -21,11 +24,52 @@ public class Table {
             else
                 table = resizeArray(table, table.length+expansionLength);
         }
-        if (s.hash == 0)
-            insert (s, (s.hash() & 0x7fffffff) % table.length);
+        if (s.hash == 0){
+            if ( separateChaining )
+                insert (s, (s.hash() & 0x7fffffff) % table.length);
+            else
+                doubleHash(s));
+        }
         else
             insert (s, (s.hash & 0x7fffffff) % table.length);
         }
+
+    public double doubleHAsh(InString s) {
+        hv1(s.hash() & 0x7fffffff)
+        if ( table[this.hv1] == null)
+        {
+            insert (s, this.hv1);
+        }
+        else
+        {
+            hv2(s.hash() & 0x7fffffff)
+            insert (s, collision());
+        }
+    }
+
+    
+
+    private int hv1(int i){
+        this.hv1 = i % table.length;
+    }
+
+    
+
+    private int hv2(int i){
+        this.hv2 = i % prime.findPerfectPrime(table.length);
+    }
+
+
+
+    private static int collision(){
+        int i = 0;
+        int newIndex;
+        do{
+            ++i;
+            newIndex = ((this.hv1+i)*this.hv2) % table.length;
+        }while(table[newIndex] != null);
+        return newIndex;
+    }
 
 
 
