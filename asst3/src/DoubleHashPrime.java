@@ -1,14 +1,17 @@
-class DoubleHashPrime {
+public class DoubleHashPrime {
 
-	public DoubleHashPrime()
+	private int perfectPrime;
+	private int perfectPrimeCounter;
+
+	public void DoubleHashPrime()
 	{
-		private int perfectPrime=0;
-		private int perfectPrimeCounter=3;
+		this.perfectPrime=0;
+		this.perfectPrimeCounter=3;
 	}
 
 
 	
-	public static findPerfectPrime(int num)
+	public int findPerfectPrime(int num)
 	{
 		for( int i=num; i>=2; i--)
 		{
@@ -16,7 +19,7 @@ class DoubleHashPrime {
 			{
 				perfectPrimeCounter++;
 				perfectPrime=i;
-				if (perfectPrimeCounter == 2)
+				if (perfectPrimeCounter == 5)
 				{
 					return perfectPrime;
 				}
@@ -27,7 +30,7 @@ class DoubleHashPrime {
 
 
 
-	private static perfectPrime(int num)
+	private boolean perfectPrime(int num)
 	{
 		int count = 0;
 		for(int i=2; i<num; i++)

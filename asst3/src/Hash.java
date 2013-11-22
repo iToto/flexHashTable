@@ -22,14 +22,22 @@ public class Hash {
 
 
     public static void main(String[] args) {
-        loadTextFile("hash_test_file1.txt");
+        loadTextFile("hash_test_file2.txt");
         Table ht = new Table();
         //printHashTableStatistics();
 
         //ht = new Table(); dont need this
         timePutOperation(ht);
         timeGetOperation(ht);
-        countCollisions(ht);
+        if (ht.separateChaining)
+        {
+            countCollisions(ht);
+        }
+        else
+        {
+            System.out.println("There were: " + ht.collisionCounter + " collisions!");
+        }
+        
     }
 
 

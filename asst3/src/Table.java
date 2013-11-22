@@ -3,21 +3,19 @@
 public class Table {
 
     public static int elementsInTable=0;
-    private static DoubleHashPrime prime = new DoubleHashPrime();
     private static double expansionCoefficient = 2.0;
     private static int expansionLength = 100;
     private static boolean expandByFactor = true;
-    private static boolean separateChaining = true;
+    public static boolean separateChaining = false;
     private static char markerScheme = 'A';
     public static InString[] table = new InString[101];
-    private static double loadFactor = 0.5;
-    private static int hv1 = 0;
-    private static int hv2 = 0;
+    private static double loadFactor = 0.345;
+    public int collisionCounter = 0;
 
 
 
     /** Inserts a String node (InString) into the array. */
-    public static void put (InString s) {
+    public void put (InString s) {
         if (elementsInTable+1 > table.length*loadFactor) {
             if (expandByFactor)
                 table = resizeArray(table, (int) (table.length*expansionCoefficient));
@@ -28,46 +26,61 @@ public class Table {
             if ( separateChaining )
                 insert (s, (s.hash() & 0x7fffffff) % table.length);
             else
-                doubleHash(s));
+                //System.out.println( "before doubleHash" );
+                doubleHash(s);
         }
         else
             insert (s, (s.hash & 0x7fffffff) % table.length);
         }
 
-    public double doubleHAsh(InString s) {
-        hv1(s.hash() & 0x7fffffff)
-        if ( table[this.hv1] == null)
+    public void doubleHash(InString s) {
+        //System.out.println( "inside doubleHash" );
+        int key = s.hash() & 0x7fffffff;
+        int hv1 = hv1(key);
+        int hv2 = hv2(key);
+
+        if ( table[hv1] == null)
         {
-            insert (s, this.hv1);
+            //System.out.println( "inside if hv1" );
+            insert (s, hv1);
         }
         else
-        {
-            hv2(s.hash() & 0x7fffffff)
-            insert (s, collision());
+        {   
+            // System.out.println( "got a collision, before insert with collision function" );
+            //System.out.println( hv1 + " - " + hv2 );
+            insert (s, collision(key, hv2));
+            //System.out.println( "finished insert with collision function" );
         }
     }
 
     
 
-    private int hv1(int i){
-        this.hv1 = i % table.length;
+    private static int hv1(int i){
+        return i % table.length;
     }
 
     
 
-    private int hv2(int i){
-        this.hv2 = i % prime.findPerfectPrime(table.length);
+    private static int hv2(int i){
+        DoubleHashPrime prime = new DoubleHashPrime();
+        int primeNum1 = prime.findPerfectPrime(table.length);
+        int primeNum2 = prime.findPerfectPrime(primeNum1);
+        int num = (primeNum2*i)%primeNum1;
+        //System.out.println(  "  ---> "+num );
+        return num;
     }
 
 
 
-    private static int collision(){
+    private int collision(int hv1, int hv2){
         int i = 0;
-        int newIndex;
+        int newIndex = 0;
         do{
+            // System.out.println( i);
+            collisionCounter++;
             ++i;
-            newIndex = ((this.hv1+i)*this.hv2) % table.length;
-        }while(table[newIndex] != null);
+            newIndex = (hv1+(i*hv2)) % table.length;
+        }while(table[newIndex] != null && i < table.length);
         return newIndex;
     }
 
@@ -76,8 +89,10 @@ public class Table {
     //puts the node where it belongs in the linked list of that index
     public static void insert (InString s, int i) {
         InString currentNode = null;
-        if (table[i] == null)
+        if (table[i] == null){
             table [i] = s;
+            // System.out.println( "inserted!!!  " +i);
+        }
         else {
             currentNode = table [i];
             while (currentNode.next != null) {
@@ -90,7 +105,7 @@ public class Table {
 
 
 
-    static void rehash (int newSize) {
+    public void rehash (int newSize) {
         InString[] temp = table ;
         table = new InString[newSize];
         for (int i = 0; i < temp.length; ++i) {
