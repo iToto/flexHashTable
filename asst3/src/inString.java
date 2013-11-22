@@ -1,12 +1,15 @@
 
  class InString {
 	public String str;
-	public int hash;
+	public int hash = 0;
 	public InString next;
+	private int collision = 0;
 	
 	public InString (String stri) {
 		str = stri;
 	}
+
+
 	
 	public int hash() {
 		if (str.length() == 0)
@@ -16,6 +19,8 @@
 		}
 		return hash;
 	}
+
+
 	
 	public String toString() {
 		return str;
