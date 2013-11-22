@@ -1,9 +1,12 @@
-class DoubleHashPrime	 {
+class DoubleHashPrime {
 
-	public DoubleHashPrime(){
+	public DoubleHashPrime()
+	{
 		private int perfectPrime=0;
 		private int perfectPrimeCounter=3;
 	}
+
+
 	
 	public static findPerfectPrime(int num)
 	{
@@ -20,8 +23,9 @@ class DoubleHashPrime	 {
 			}
 		}
 		return perfectPrime;
-
 	}
+
+
 
 	private static perfectPrime(int num)
 	{
@@ -33,5 +37,4 @@ class DoubleHashPrime	 {
 		}
 		return true;
 	}
-
 }
